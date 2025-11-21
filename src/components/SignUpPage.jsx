@@ -2,12 +2,11 @@
 
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import axios from 'axios';
 import toast from 'react-hot-toast';
+import api from '../utils/api'; // <-- CHANGE 1: Import our api tool
 import { jwtDecode } from 'jwt-decode';
 import { HiUser, HiLockClosed, HiMail } from 'react-icons/hi';
 
-// Get 'setCurrentUser' as a prop from App.jsx
 export default function SignUpPage({ setCurrentUser }) {
   const navigate = useNavigate();
 
@@ -32,9 +31,9 @@ export default function SignUpPage({ setCurrentUser }) {
     }
 
     try {
-      // Send registration data to the backend
-      const response = await axios.post(
-        'http://localhost:4000/api/auth/register',
+      // CHANGE 2: Use 'api.post' and remove the full URL
+      const response = await api.post(
+        '/auth/register', 
         {
           firstName: formData.firstName,
           lastName: formData.lastName,
@@ -43,25 +42,18 @@ export default function SignUpPage({ setCurrentUser }) {
         }
       );
 
-      // Get the token from the successful registration response
       const token = response.data.token;
-
-      // Save the token to localStorage to keep the user logged in
       localStorage.setItem('babyStepsToken', token);
-
-      // Set a temporary flag to show the "Welcome," message
       sessionStorage.setItem('isNewUser', 'true');
 
-      // Decode the token and update the user state in the main App component
       const decodedUser = jwtDecode(token);
       setCurrentUser(decodedUser.user);
 
       toast.success('Registration successful! Welcome!');
-
-      // Navigate directly to the dashboard
       navigate('/dashboard');
 
     } catch (err) {
+      // api.js handles network errors, but we catch specific backend messages here
       toast.error(err.response?.data?.msg || 'Registration failed');
     }
   };
@@ -70,6 +62,7 @@ export default function SignUpPage({ setCurrentUser }) {
     backgroundImage: `url('/background-pattern.png')`,
   };
 
+  // (JSX remains exactly the same)
   return (
     <div style={backgroundStyle} className="h-screen w-screen bg-cover bg-center flex items-center justify-center">
       <div className="bg-white p-10 rounded-2xl shadow-xl max-w-md w-full">

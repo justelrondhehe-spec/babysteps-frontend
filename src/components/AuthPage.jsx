@@ -2,12 +2,11 @@
 
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import axios from 'axios';
 import toast from 'react-hot-toast';
+import api from '../utils/api'; // <-- CHANGE 1: Import api
 import { jwtDecode } from 'jwt-decode';
 import { HiUser, HiLockClosed } from 'react-icons/hi';
 
-// Get 'setCurrentUser' as a prop from App.jsx
 export default function AuthPage({ setCurrentUser }) { 
   const navigate = useNavigate();
   const [formData, setFormData] = useState({ username: '', password: '' });
@@ -19,22 +18,17 @@ export default function AuthPage({ setCurrentUser }) {
   const handleLogin = async (e) => {
     e.preventDefault(); 
     try {
-      const response = await axios.post( 'http://localhost:4000/api/auth/login', formData );
+      // CHANGE 2: Use api.post and the short path
+      const response = await api.post('/auth/login', formData);
+      
       const token = response.data.token;
-      
-      // Save the token to localStorage to keep the user logged in
       localStorage.setItem('babyStepsToken', token);
-      
-      // Clear the "new user" flag, since this is a returning user
       sessionStorage.removeItem('isNewUser');
 
-      // Decode the token and update the user state in the main App component
       const decodedUser = jwtDecode(token);
       setCurrentUser(decodedUser.user);
       
       toast.success('Logged in successfully!');
-      
-      // Send the user to their dashboard
       navigate('/dashboard');
 
     } catch (err) {
@@ -46,6 +40,7 @@ export default function AuthPage({ setCurrentUser }) {
     backgroundImage: `url('/background-pattern.png')`,
   };
 
+  // (JSX remains exactly the same)
   return (
     <div style={backgroundStyle} className="h-screen w-screen bg-cover bg-center flex items-center justify-center">
       <div className="bg-white p-10 rounded-2xl shadow-xl max-w-md w-full">
