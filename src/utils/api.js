@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 
 // This is our "API client"
 const api = axios.create({
-  baseURL: 'http://localhost:4000/api' // The base URL of our back-end
+  baseURL: 'https://babysteps-backend-u66k.onrender.com/api' // The base URL of our back-end
 });
 
 // This "interceptor" runs BEFORE every single request
