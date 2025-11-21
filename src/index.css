@@ -1,0 +1,65 @@
+/* src/index.css */
+
+/* Tailwind MUST come first */
+@import "tailwindcss";
+
+/* --- Custom Calendar Styles (Standard CSS) --- */
+.react-calendar {
+  border: none;
+  padding: 0.5rem; /* Equivalent to p-2 */
+}
+
+.react-calendar__tile {
+  border-radius: 9999px; /* Equivalent to rounded-full */
+  max-width: 100%;
+  padding: 0.5em 0.6em; 
+  text-align: center;
+  transition: background-color 0.2s ease; /* Add transition for smoothness */
+}
+
+/* Base style for today - we'll override background with JS */
+.react-calendar__tile--now {
+  background-color: transparent !important; 
+  font-weight: bold;
+}
+/* Ensure our specific JS classes override the base today style if needed */
+.react-calendar__tile--now.bg-green-200,
+.react-calendar__tile--now.bg-blue-100 {
+  background-color: revert !important; 
+}
+
+
+/* Hover/Focus effect for clickable tiles */
+.react-calendar__tile:enabled:hover,
+.react-calendar__tile:enabled:focus {
+  background-color: #e5e7eb; /* bg-gray-200 */
+}
+/* Don't let hover override our green/blue today markers */
+.react-calendar__tile.bg-green-200:hover,
+.react-calendar__tile.bg-blue-100:hover {
+   background-color: revert; 
+}
+
+
+/* Style for the currently selected day (if user clicks one) */
+.react-calendar__tile--active {
+  background-color: #3b82f6; /* bg-blue-500 */
+  color: white; 
+}
+/* Don't let active selection override our green/blue today markers */
+.react-calendar__tile--active.bg-green-200,
+.react-calendar__tile--active.bg-blue-100 {
+   background-color: revert !important; 
+}
+
+
+/* Optional: Style month/year navigation */
+.react-calendar__navigation button {
+  font-weight: bold;
+  border-radius: 9999px; /* Make nav buttons round */
+}
+.react-calendar__navigation button:enabled:hover,
+.react-calendar__navigation button:enabled:focus {
+   background-color: #e5e7eb; /* bg-gray-200 */
+}
+/* ------------------------------------------- */
