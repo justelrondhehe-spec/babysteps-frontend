@@ -71,7 +71,7 @@ export default function AddHabits({ loadHabits, currentUser }) {
   return (
     <div className="flex h-screen bg-gray-100">
       
-      <div className="w-64 bg-[#7A8744] text-white flex flex-col">
+      <div className="w-64 bg-gradient-to-b from-[#8E9E57] to-[#606C38] text-white flex flex-col">
         <div className="flex flex-col items-center p-6 border-b border-white/20">
           <img
             src="/user-avatar.png"
