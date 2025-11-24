@@ -73,7 +73,7 @@ export default function Progress({ habits, currentUser }) {
   return (
     <div className="flex h-screen bg-gray-100">
       
-      <div className="w-64 bg-gradient-to-b from-[#8E9E57] to-[#606C38] text-white flex flex-col">
+      <div className="w-64 bg-gradient-to-b from-[#d2db9e] to-[#56562b] text-white flex flex-col">
         <div className="flex flex-col items-center p-6 border-b border-white/20">
           <img src="/user-avatar.png" alt="User Avatar" className="w-20 h-20 rounded-full mb-3 border-2 border-white"/>
           <h3 className="font-semibold text-lg">{displayName}</h3>
